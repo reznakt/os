@@ -38,9 +38,9 @@ init:
 	print MSG_REAL_MODE
 
 	call ldstage2			; load stage 2 into memory
-	jmp $
 
-	call stage2				; proceed to stage 2, noreturn
+	print MSG_STAGE2
+	jmp STAGE2_LOCATION		; proceed to stage 2
 
 
 ldstage2:
@@ -57,10 +57,6 @@ ldstage2:
 	mov dl, [BOOT_DRIVE]
 	call ldisk
 	ret
-
-stage2:
-	print MSG_STAGE2
-	jmp STAGE2_LOCATION
 
 
 BOOT_DRIVE		db 0
