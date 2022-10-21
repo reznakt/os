@@ -6,8 +6,15 @@
 jmp 0:init
 
 
+BOOTABLE_MAGIC_NUMBER 	equ 0xaa55
+
+STAGE2_LOCATION 		equ 0x1000
+STAGE2_SIZE 			equ 50		; sectors (x 512 bytes)
+
+
 %include "boot/puts.asm"
 %include "boot/disk.asm"
+
 
 %macro print 1
 	push si
@@ -17,11 +24,6 @@ jmp 0:init
 	pop si
 %endmacro
 
-
-BOOTABLE_MAGIC_NUMBER equ 0xaa55
-
-STAGE2_LOCATION equ 0x1000
-STAGE2_SIZE 	equ 50		; sectors (x 512 bytes)
 
 init:
 	xor ax, ax
