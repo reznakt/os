@@ -1,15 +1,16 @@
 [bits 16]
-
-; offset set by BIOS
-[org 0x7c00]
+[org 0x7c00] ; offset set by BIOS
 
 jmp 0:init
 
 
 BOOTABLE_MAGIC_NUMBER 	equ 0xaa55
 
-STAGE2_LOCATION 		equ 0x1000
-STAGE2_SIZE 			equ 50		; sectors (x 512 bytes)
+
+; ---------- BEGIN CONFIG SECTION ---------- ;
+		STAGE2_LOCATION 		equ 0x1000
+		STAGE2_SIZE 			equ 50	; sect
+; ----------- END CONFIG SECTION ----------- ;
 
 
 %include "boot/puts.asm"
