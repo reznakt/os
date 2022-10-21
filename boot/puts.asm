@@ -4,26 +4,25 @@
 puts:	
 	pusha
 	mov ah, 0x0e
-_puts:	
-	mov al, [bx]
-	cmp al, 0
-	je _rputs
-	int 0x10
-	inc bx
-	jmp _puts
-_rputs:
+_puts:
+	lodsb
+	or al, al
+	jnz _putsint
 	popa
 	ret
+_putsint:
+	int 0x10
+	jmp _puts
 
 ; prints a newline to the screen
 newl:	
-	pusha
+	push ax
 	mov ah, 0x0e
 	mov al, 0x0a
 	int 0x10
 	mov al, 0x0d
 	int 0x10
-	popa
+	pop ax
 	ret
 
 ; prints a hex number stored in dx
@@ -46,9 +45,10 @@ _prsnd:
 	inc cx
 	jmp _prhex
 _prend: 
-	mov bx, _hexout
+	mov si, _hexout
 	call puts
 	popa
 	ret
 
-_hexout: db "0x0000", 0
+_hexout: 
+	db "0x0000", 0

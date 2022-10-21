@@ -1,27 +1,36 @@
 [bits 16]
 
+INT13_READ 		equ 0x02
+
+LOAD_HEAD 		equ 0x0
+LOAD_CYLINDER 	equ 0x0
+LOAD_SECTOR 	equ 0x02
+
+
+; load <dh> sectors from sidk <dl> into memory at address <bx>
+; prints info about loaded sectors and error code in case of error
 ldisk:	
 	pusha
 	push dx
 
-	mov ah, 0x02	; read
-	mov al, dh		; number of sectors to read
-	mov cl, 0x02	; starting sector 0x02
-	mov ch, 0x00 	; cylinder 0x00
-	mov dh, 0x00	; head 0x00
+	mov ah, INT13_READ		; read
+	mov al, dh				; number of sectors to read
+	mov cl, LOAD_SECTOR		; starting sector 0x02
+	mov ch, LOAD_CYLINDER 	; cylinder 0x00
+	mov dh, LOAD_HEAD		; head 0x00
 
 	int 0x13
 	jc _lderr		; carry -> read error
 
-	
-	mov bx, scmsg
+	; print number of loaded/expected sectors
+	mov si, scmsg
 	call puts
 
 	mov dx, ax
 	and dx, 0x00ff
 	call prhex
 
-	mov bx, scmsg2
+	mov si, scmsg2
 	call puts
 
 	pop dx			; wanted # of sectors
@@ -31,6 +40,7 @@ ldisk:
 
 	call newl
 
+	; check if all sectors were loaded
 	cmp al, dl		; compare to actual # read
 	jne _lderr
 	popa
@@ -41,7 +51,7 @@ _ldend:
 					; execution at this point
 
 _lderr:	
-mov bx, ldmsg
+mov si, ldmsg
 	call puts
 	xor dx, dx
 	mov dl, ah		; error code
