@@ -1,3 +1,6 @@
+MAKEFLAGS := --jobs=$(shell nproc)
+MAKEFLAGS += --output-sync=target
+
 RESULT=os.bin
 
 QEMU=/usr/bin/qemu-system-x86_64
@@ -21,9 +24,10 @@ OBJ=${C_SOURCES:.c=.o}
 all: ${RESULT}
 
 clean:
-	@$(foreach file, $(wildcard boot/*.bin *.elf $(OBJ)), rm -vf $(file);)
+	@$(foreach file, $(wildcard boot/*.bin *.elf */*.o), rm -vf $(file);)
 
-force: clean all
+force:
+	$(MAKE) -B
 
 run: ${RESULT}
 	${QEMU} ${QEMU_FLAGS} -drive file=$^,${QEMU_DRIVE_FLAGS}
