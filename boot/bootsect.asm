@@ -17,15 +17,6 @@ BOOTABLE_MAGIC_NUMBER 	equ 0xaa55
 %include "boot/disk.asm"
 
 
-%macro print 1
-	push si
-	mov si, %1
-	call puts
-	call newl
-	pop si
-%endmacro
-
-
 init:
 	xor ax, ax
 	mov ds, ax

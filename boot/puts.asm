@@ -1,5 +1,15 @@
 [bits 16]
 
+
+%macro print 1
+	push si
+	mov si, %1
+	call puts
+	call newl
+	pop si
+%endmacro
+
+
 ; prints a null-terminated string pointed to by bx
 puts:	
 	pusha
