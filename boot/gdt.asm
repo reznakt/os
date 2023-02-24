@@ -31,8 +31,8 @@ gcode:
 	dw 0xffff		; segment length
 	dw 0x0			; segment base
 	db 0x0			; segment base
-	db 10011010b	; flags
-	db 11001111b	; flags
+	db 10011010b		; flags
+	db 11001111b		; flags
 	db 0x0			; segment base
 
 ; data segment
