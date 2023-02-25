@@ -56,7 +56,7 @@ begin32:
 	jmp KERNEL_OFFSET	; transfer control to the kernel
 	
 
-BOOT_DRIVE			db 0
+BOOT_DRIVE			resb 1
 MSG_REAL_MODE 		db "starting in real mode", 0
 MSG_PROT_MODE 		db "transfering control to kernel", 0
 MSG_LOAD_KERNEL 	db "loading kernel to ", 0
