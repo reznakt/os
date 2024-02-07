@@ -3,13 +3,9 @@ MAKEFLAGS += --output-sync=target
 
 RESULT=os.bin
 
-QEMU=/usr/bin/qemu-system-x86_64
+QEMU=qemu-system-x86_64
 QEMU_FLAGS=-s -boot acd
 QEMU_DRIVE_FLAGS=format=raw,index=0,if=floppy
-BINUTILS_PREFIX=/usr/local/x86_64-elf-gcc/bin/x86_64-elf
-
-CC=${BINUTILS_PREFIX}-gcc
-GDB=${BINUTILS_PREFIX}-gdb
 
 CFLAGS=-c -g -O0 -std=c99 -Wall -Wextra -pedantic -ffreestanding -mno-red-zone
 
