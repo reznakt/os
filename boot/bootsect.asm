@@ -3,6 +3,7 @@
 ; offset set by BIOS
 [org 0x7c00]
 
+; flush the CS with a far jump
 jmp 0:init
 
 
